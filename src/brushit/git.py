@@ -17,9 +17,10 @@ class Upstream:
 class BranchInfo:
     name: str
     upstream: Upstream | None
+    working_folder: Path
 
 
-def run_subprocess(*args: str, working_folder: Path | None = None) -> list[str]:
+def run_subprocess(*args: str, working_folder: Path) -> list[str]:
     result = subprocess.run(
         args,
         stdout=subprocess.PIPE,
@@ -33,22 +34,22 @@ def run_subprocess(*args: str, working_folder: Path | None = None) -> list[str]:
     return lines
 
 
-def git(*args: str, working_folder: Path | None = None) -> list[str]:
+def git(*args: str, working_folder: Path) -> list[str]:
     """command runnig the git cli."""
     return run_subprocess("git", *args, working_folder=working_folder)
 
 
-def git_branch(working_folder: Path | None = None) -> list[str]:
+def git_branch(working_folder: Path) -> list[str]:
     # git branch --format="%(refname:short),%(upstream),%(upstream:track,nobracket)"
     return git(
         "branch",
-        '--format="%(refname:short),%(upstream),%(upstream:track,nobracket)"',
+        '--format="%(refname:short) , %(upstream) , %(upstream:track,nobracket)"',
         working_folder=working_folder,
     )
 
 
-def _parse(line: str) -> BranchInfo:
-    items = line.split(",")
+def _parse(line: str, working_folder: Path) -> BranchInfo:
+    items = line.split(" , ")
     if not len(items) == 3:
         raise ValueError(
             (
@@ -77,7 +78,7 @@ def _parse(line: str) -> BranchInfo:
     if remote_name:
         upstream = Upstream(remote_name, upstream_exists)
 
-    return BranchInfo(name, upstream)
+    return BranchInfo(name, upstream, working_folder=working_folder)
 
 
 BranchName = str
@@ -85,9 +86,19 @@ BranchName = str
 
 def branch_info(working_folder: Path | None) -> dict[BranchName, BranchInfo]:
     branch_info = {}
+    if working_folder is None:
+        working_folder = Path.cwd()
+
+    # prune it first to sync remote with local.
+    git("fetch", "-p", working_folder=working_folder)
     for info in git_branch(working_folder):
         if info.strip() == "":
             continue
-        bi = _parse(info)
+        bi = _parse(info, working_folder)
         branch_info[bi.name] = bi
     return branch_info
+
+
+def delete_branches(branches: dict[BranchName, BranchInfo]):
+    for branch in branches.values():
+        git("branch", "-D", branch.name, working_folder=branch.working_folder)

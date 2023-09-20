@@ -1,20 +1,26 @@
 [tool.poetry]
-name = "duster"
+name = "brushit"
 version = "0.1.0"
 description = ""
-authors = ["Sander Teunissen <s.teunissen@gmail.com>"]
+authors = []
 readme = "README.md"
 
 [tool.poetry.dependencies]
 python = "^3.10"
 # rich = "^13.5.2"
 # survey = "^4.5.4"
-questionary = "^2.0.0"
+questionary = "2.0.0"
+tyro = "^0.5.7"
+pydantic = "^2.3.0"
+tyro-strict = "^0.1.0"
 
 
 [tool.poetry.group.dev.dependencies]
-mypy = "^1.5.1"
-pytest = "^7.4.0"
+pytest = ">=7.4.2"
+mypy = ">=1.5.1"
+ruff = ">=0.0.287"
+black = ">=23.9.1"
+
 
 [build-system]
 requires = ["poetry-core"]
