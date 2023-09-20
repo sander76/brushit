@@ -42,13 +42,13 @@ def git_branch(working_folder: Path | None = None) -> list[str]:
     # git branch --format="%(refname:short),%(upstream),%(upstream:track,nobracket)"
     return git(
         "branch",
-        '--format="%(refname:short),%(upstream),%(upstream:track,nobracket)"',
+        '--format="%(refname:short) , %(upstream) , %(upstream:track,nobracket)"',
         working_folder=working_folder,
     )
 
 
 def _parse(line: str) -> BranchInfo:
-    items = line.split(",")
+    items = line.split(" , ")
     if not len(items) == 3:
         raise ValueError(
             (

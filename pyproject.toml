@@ -10,6 +10,9 @@ python = "^3.10"
 # rich = "^13.5.2"
 # survey = "^4.5.4"
 questionary = "^2.0.0"
+tyro = "^0.5.5"
+typed-argument-parser = "^1.8.1"
+pydantic = "^2.3.0"
 
 
 [tool.poetry.group.dev.dependencies]
