@@ -1,12 +1,13 @@
 """some cli"""
 from pathlib import Path
-from pydantic import BaseModel, DirectoryPath, ValidationError
-import tyro
+from pydantic import BaseModel, DirectoryPath
+import clipstick
 from brushit import controller
-from rich import print
 
 
 class List(BaseModel):
+    """List all local branches."""
+
     root_folder: DirectoryPath = Path.cwd()
     """The repo root folder."""
 
@@ -30,9 +31,15 @@ class Clean(BaseModel):
         controller.clean_branches(self.root_folder, cleaner=cleaner)
 
 
+class Main(BaseModel):
+    """Brush your branches."""
+
+    sub_command: List | Clean
+
+    def main(self):
+        self.sub_command.main()
+
+
 if __name__ == "__main__":
-    try:
-        out = tyro.cli(Clean | List)  # type: ignore
-        out.main()
-    except ValidationError as err:
-        print(err)
+    out = clipstick.parse(Main)
+    out.main()
