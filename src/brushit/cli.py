@@ -1,7 +1,9 @@
 """some cli"""
 from pathlib import Path
-from pydantic import BaseModel, DirectoryPath
+
 import clipstick
+from pydantic import BaseModel, DirectoryPath
+
 from brushit import controller
 
 
@@ -40,6 +42,10 @@ class Main(BaseModel):
         self.sub_command.main()
 
 
-if __name__ == "__main__":
+def run():
     out = clipstick.parse(Main)
     out.main()
+
+
+if __name__ == "__main__":
+    run()

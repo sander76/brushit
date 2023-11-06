@@ -1,14 +1,17 @@
 [tool.poetry]
 name = "brushit"
-version = "0.2.0"
+version = "0.3.0"
 description = ""
 authors = []
 readme = "README.md"
 
+[tool.poetry.scripts]
+brushit = 'brushit.cli:run'
+
 [tool.poetry.dependencies]
 python = "^3.10"
 questionary = "2.0.0"
-clipstick = "^0.3.4"
+clipstick = "^0.3.5"
 
 
 [tool.poetry.group.dev.dependencies]

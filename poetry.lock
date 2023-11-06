@@ -69,13 +69,13 @@ colorama = {version = "*", markers = "platform_system == \"Windows\""}
 
 [[package]]
 name = "clipstick"
-version = "0.3.4"
+version = "0.3.5"
 description = "A pydantic cli creation tool based on Pydantic models."
 optional = false
 python-versions = ">=3.10,<4.0"
 files = [
-    {file = "clipstick-0.3.4-py3-none-any.whl", hash = "sha256:651c4bffd40a58e08ef3d717d5f7bac7a7d1af397bc0d138dbd9f4512af7d0b5"},
-    {file = "clipstick-0.3.4.tar.gz", hash = "sha256:2e34e7e477c6f5f6c6db9015e46f3468ad94a267f6c6f213bb2f4eb36909844b"},
+    {file = "clipstick-0.3.5-py3-none-any.whl", hash = "sha256:3a2e25c95e21b7f3f9874bc00ac187229d526e9779ccf55c0855c967678fda81"},
+    {file = "clipstick-0.3.5.tar.gz", hash = "sha256:d14c753c1b7d198f44dc614b54ce993db48bcb2468beae054657b1a4abfe1f75"},
 ]
 
 [package.dependencies]
@@ -543,4 +543,4 @@ files = [
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.10"
-content-hash = "7599eab18420087a77116ee52d292544465c1268795d6223595d455c80eb9acc"
+content-hash = "58e3a00aadfde835b24940f887caa4a677f8ab89be8acc930de243b7f0d4380d"
